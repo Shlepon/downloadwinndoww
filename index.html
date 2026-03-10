@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
+            background: black; font-family: 'Impact', sans-serif;
+        }
+
+        /* Фоновый градиент */
+        .background {
+            position: absolute;
+            width: 110%; height: 110%;
+            top: -5%; left: -5%;
+            background: linear-gradient(to bottom, #b40000, #000000);
+            z-index: 1;
+        }
+
+        /* Сетка */
+        .grid {
+            position: absolute;
+            width: 200%; height: 200%;
+            top: -50%; left: -50%;
+            background-size: 50px 50px;
+            /* Верхняя часть сетки (черная на красном) */
+            background-image: 
+                linear-gradient(to right, rgba(0,0,0,0.3) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0,0,0,0.3) 1px, transparent 1px);
+            z-index: 2;
+        }
+
+        /* Нижняя часть сетки (красная на черном) через маску */
+        .grid-bottom {
+            position: absolute;
+            width: 100%; height: 50%;
+            bottom: 0; left: 0;
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(255,0,0,0.2) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,0,0,0.2) 1px, transparent 1px);
+            z-index: 3;
+        }
+
+        .logo {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 120px;
+            text-shadow: 5px 5px 15px rgba(0,0,0,0.8);
+            z-index: 10;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="background" id="bg"></div>
+    <div class="grid" id="grid"></div>
+    <div class="grid-bottom"></div>
+    <div class="logo" id="logo">Z-CITY RP</div>
+
+    <script>
+        // Эффект параллакса за мышкой
+        document.addEventListener('mousemove', (e) => {
+            const x = (window.innerWidth / 2 - e.pageX) / 50;
+            const y = (window.innerHeight / 2 - e.pageY) / 50;
+            
+            document.getElementById('bg').style.transform = `translate(${x}px, ${y}px)`;
+            document.getElementById('grid').style.transform = `translate(${x*1.5}px, ${y*1.5}px)`;
+            document.getElementById('logo').style.transform = `translate(calc(-50% + ${x*0.5}px), calc(-50% + ${y*0.5}px))`;
+        });
+    </script>
+</body>
+</html>
